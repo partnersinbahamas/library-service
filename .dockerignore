@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+
+# Local settings
+.env
+*.env
+
+# IDE configs
+.idea/
+.vscode/
+
+# Test & coverage
+pytest.cache/
+.coverage
