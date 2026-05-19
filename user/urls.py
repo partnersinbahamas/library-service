@@ -10,6 +10,8 @@ from .views import CreateUserView, ManageUserView
 
 BASE_API_URL = settings.BASE_API_URL
 
+app_name = "user"
+
 urlpatterns = [
     path(f"{BASE_API_URL}/register/", CreateUserView.as_view(), name="register"),
     path(f"{BASE_API_URL}/login/", TokenObtainPairView.as_view(), name="login"),
