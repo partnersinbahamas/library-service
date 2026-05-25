@@ -20,6 +20,9 @@ jobs:
           pip install black
           black --check .
 
+      - name: Check linting with flake8
+        run: flake8 .
+
       - name: Run tests with Docker Compose
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
