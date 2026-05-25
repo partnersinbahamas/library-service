@@ -20,7 +20,6 @@ class TestUserSerializer:
 
         assert user_serializer.is_valid()
 
-
     def test_should_validate_passwords_match(self):
         data = {
             "username": "user",

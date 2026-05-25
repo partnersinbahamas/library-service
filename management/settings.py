@@ -15,7 +15,7 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
-ENV_FILE = os.environ.get("DJANGO_ENV", '.env')
+ENV_FILE = os.environ.get("DJANGO_ENV", ".env")
 load_dotenv(ENV_FILE)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 if not SECRET_KEY:
-    raise Exception('SECRET_KEY is not set')
+    raise Exception("SECRET_KEY is not set")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -37,7 +37,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-BASE_API_URL = 'api/v1'
+BASE_API_URL = "api/v1"
 
 
 # Application definition
@@ -49,11 +49,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'library.apps.LibraryConfig',
-    'user.apps.UserConfig',
-    'core.apps.CoreConfig',
-    'rest_framework',
-    'rest_framework_simplejwt',
+    "library.apps.LibraryConfig",
+    "user.apps.UserConfig",
+    "core.apps.CoreConfig",
+    "rest_framework",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -71,8 +71,7 @@ ROOT_URLCONF = "management.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR]
-        ,
+        "DIRS": [BASE_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -96,8 +95,8 @@ DATABASES = {
         "NAME": os.environ.get("POSTGRES_DB"),
         "USER": os.environ.get("POSTGRES_USER"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": os.environ.get('POSTGRES_HOST'),
-        "PORT": os.environ.get('POSTGRES_PORT'),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
 
@@ -121,14 +120,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
 
 SIMPLE_JWT = {
     "AUTH_HEADER_NAME": "HTTP_JWT_AUTHORIZATION",
-    "AUTH_HEADER_TYPES": ("JWT", ),
+    "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
@@ -151,10 +150,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = "user.User"
