@@ -15,10 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install linting tools
+        run: pip install black flake8
+
       - name: Check formatting with black
-        run: |
-          pip install black
-          black --check .
+        run: black --check .
 
       - name: Check linting with flake8
         run: flake8 .
