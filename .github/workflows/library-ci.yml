@@ -15,6 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check formatting with black
+        run: |
+          pip install black
+          black --check .
+
       - name: Run tests with Docker Compose
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
