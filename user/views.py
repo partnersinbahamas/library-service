@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 
 from user.serializers import UserSerializer
 
+
 class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
 

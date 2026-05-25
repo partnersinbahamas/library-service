@@ -1,5 +1,4 @@
 import pytest
-from django.contrib.auth import get_user_model
 
 from user.serializers import UserSerializer
 
@@ -19,7 +18,6 @@ class TestUserSerializer:
         user_serializer = UserSerializer(data=data)
 
         assert user_serializer.is_valid()
-
 
     def test_should_validate_passwords_match(self):
         data = {
