@@ -25,7 +25,7 @@ BASE_API_URL = settings.BASE_API_URL
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(f"{BASE_API_URL}/user/", include("user.urls")),
-    path("", include("library.urls")),
+    path(f"{BASE_API_URL}/service/", include("library.urls")),
 ]
 
 if settings.DEBUG:
