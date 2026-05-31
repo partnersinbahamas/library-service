@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ENV_FILE = os.environ.get("DJANGO_ENV", ".env")
@@ -30,7 +31,6 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 if not SECRET_KEY:
     raise Exception("SECRET_KEY is not set")
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     "user.apps.UserConfig",
     "core.apps.CoreConfig",
     "rest_framework",
-    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -157,3 +156,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 AUTH_USER_MODEL = "user.User"
+
+# Celery
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+CELERY_TIMEZONE = "Europe/Berlin"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
