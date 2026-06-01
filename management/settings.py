@@ -49,10 +49,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "django_celery_beat",
     "library.apps.LibraryConfig",
     "user.apps.UserConfig",
     "core.apps.CoreConfig",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
