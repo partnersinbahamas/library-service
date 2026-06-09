@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "library.apps.LibraryConfig",
     "user.apps.UserConfig",
     "core.apps.CoreConfig",
+    "borrowings.apps.BorrowingsConfig",
 ]
 
 MIDDLEWARE = [
