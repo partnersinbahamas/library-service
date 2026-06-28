@@ -8,7 +8,7 @@ from library.utils import get_current_year
 class Book(models.Model):
     api_id = models.IntegerField(unique=True, default=None, null=True)
     title = models.CharField(max_length=255, db_index=True)
-    author = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, blank=True, null=True)
     summaries = models.TextField(blank=True, null=True)
     cover = models.CharField(
         choices=BookCoverChoices.choices, default=BookCoverChoices.HARD, max_length=10
