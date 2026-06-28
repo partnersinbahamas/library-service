@@ -12,7 +12,7 @@ class Borrowing(models.Model):
     user = models.ForeignKey(
         get_user_model(), on_delete=models.PROTECT, related_name="borrowings"
     )
-    borrow_date = models.DateField()
+    borrow_date = models.DateField(auto_now_add=True)
     expected_return_date = models.DateField(null=True, blank=True)
     return_date = models.DateField(null=True, blank=True)
 
