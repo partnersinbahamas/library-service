@@ -14,10 +14,10 @@ class BorrowingService:
             if Borrowing.objects.filter(
                 book_id=book.id, user_id=user.id, return_date__isnull=True
             ).exists():
-                raise ValidationError("Book is already borrowed")
+                raise ValidationError("Book is already borrowed.")
 
             if book.inventory <= 0:
-                raise ValidationError("Book is out of stock")
+                raise ValidationError("Book is out of stock.")
 
             borrowing = Borrowing.objects.create(book=book, user=user, **borrowing_data)
 
