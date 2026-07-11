@@ -59,6 +59,7 @@ redis==8.0.0
 requests==2.34.2
 six==1.17.0
 sqlparse==0.5.5
+time-machine==3.2.0
 tornado==6.5.6
 typing_extensions==4.15.0
 tzdata==2026.2
