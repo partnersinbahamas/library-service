@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "library.apps.LibraryConfig",
     "user.apps.UserConfig",
     "core.apps.CoreConfig",
+    "borrowings.apps.BorrowingsConfig",
 ]
 
 MIDDLEWARE = [
@@ -126,8 +127,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_NAME": "HTTP_JWT_AUTHORIZATION",
-    "AUTH_HEADER_TYPES": ("JWT",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "AUTH_HEADER_TYPES": ("Bearer",),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
