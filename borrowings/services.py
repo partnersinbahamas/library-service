@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import F
+from django.utils import timezone
 
 from borrowings.models import Borrowing
 from library.models import Book
@@ -23,5 +24,19 @@ class BorrowingService:
 
             book.inventory = F("inventory") - 1
             book.save()
+
+            return borrowing
+
+    @staticmethod
+    def book_repay(borrowing: Borrowing):
+        with transaction.atomic():
+            if borrowing.return_date:
+                raise ValidationError("Book is already returned.")
+
+            borrowing.return_date = timezone.now().date()
+            borrowing.book.inventory = F("inventory") + 1
+
+            borrowing.save()
+            borrowing.book.save()
 
             return borrowing
