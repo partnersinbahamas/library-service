@@ -5,11 +5,16 @@ from rest_framework.reverse import reverse_lazy
 from rest_framework.test import APIClient
 
 from borrowings.models import Borrowing
+from borrowings.services import BorrowingService
 from borrowings.tests.factories import BorrowingFactory
 from library.tests.factories import BookFactory
 from user.tests.factories import UserFactory
 
 BORROWINGS_URL = reverse_lazy("borrowings:borrowings-list")
+
+
+def get_repay_url(borrowing: Borrowing):
+    return reverse_lazy("borrowings:borrowings-repay", args=[borrowing.id])
 
 
 @pytest.mark.django_db
@@ -127,3 +132,46 @@ class TestBorrowingsCreateView:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert Borrowing.objects.count() == 1
+
+
+@pytest.mark.django_db
+class TestBorrowingDetailView:
+    def setup_method(self):
+        self.client = APIClient()
+
+    @time_machine.travel("2026-01-05", tick=False)
+    def test_borrowing_should_be_repayed(self):
+        user = UserFactory()
+        book = BookFactory(inventory=2)
+        self.client.force_authenticate(user)
+
+        borrowing = BorrowingService.book_borrow(book, user)
+
+        BORROWING_REPAY_URL = get_repay_url(borrowing)
+        response = self.client.post(BORROWING_REPAY_URL)
+        borrowing.refresh_from_db()
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data == {
+            "id": borrowing.id,
+            "book": book.id,
+            "borrow_date": str(borrowing.borrow_date),
+            "expected_return_date": None,
+            "return_date": str(borrowing.return_date),
+            "user": user.id,
+        }
+
+    @time_machine.travel("2026-01-05", tick=False)
+    def test_borrowing_can_not_be_repayed_twice(self):
+        user = UserFactory()
+        book = BookFactory(inventory=2)
+        self.client.force_authenticate(user)
+
+        borrowing = BorrowingService.book_borrow(book, user)
+        BorrowingService.book_repay(borrowing)
+
+        BORROWING_REPAY_URL = get_repay_url(borrowing)
+        response = self.client.post(BORROWING_REPAY_URL)
+        borrowing.refresh_from_db()
+
+        assert "Book is already returned." in response.data["non_field_errors"]

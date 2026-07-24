@@ -65,3 +65,34 @@ class TestBorrowingService:
         assert borrowing.user == user
         assert borrowing.book == book
         assert book.inventory == 0
+
+    @time_machine.travel("2026-01-05", tick=False)
+    def test_borrowing_should_be_repayed(self):
+        book = BookFactory(inventory=2)
+        user = UserFactory()
+
+        borrowing = BorrowingService.book_borrow(book, user)
+        BorrowingService.book_repay(borrowing)
+
+        assert borrowing.book.inventory == 2
+        assert str(borrowing.return_date) == "2026-01-05"
+
+    @time_machine.travel("2026-01-05", tick=False)
+    def test_borrowing_can_not_be_repayed_twice(self):
+        book = BookFactory(inventory=2)
+        user = UserFactory()
+
+        borrowing = BorrowingService.book_borrow(book, user)
+        # First borrowing repay
+        BorrowingService.book_repay(borrowing)
+
+        with pytest.raises(ValidationError) as exc:
+            # Second borrowing repay
+            BorrowingService.book_repay(borrowing)
+
+        error = exc.value.error_list[0]
+
+        book.refresh_from_db()
+
+        assert "Book is already returned." in error.message
+        assert book.inventory == 2
