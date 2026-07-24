@@ -61,3 +61,22 @@ class BorrowingDetailSerializer(serializers.ModelSerializer):
             "return_date",
             "user",
         )
+
+
+class BorrowingRepaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Borrowing
+        fields = (
+            "id",
+            "book",
+            "borrow_date",
+            "expected_return_date",
+            "return_date",
+            "user",
+        )
+
+    def validate(self, attrs):
+        if self.instance and self.instance.return_date is not None:
+            raise ValidationError("Book is already returned.")
+
+        return attrs
